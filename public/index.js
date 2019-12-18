@@ -12,7 +12,8 @@ async function postData() {
 
 postData().then((reviews) => {
     showData(reviews);
-    renderData(reviews)
+    console.log(model);
+    renderData()
   }
 ).catch(() => {
 });
@@ -38,19 +39,21 @@ function showData(reviews) {
 }
 
 
-function renderData(reviews) {
-  console.log(model);
-  
-  renderHeaders(reviews);
-  renderRows(reviews);
+function renderData() {
+  const container = document.querySelector('.wine-reviews');
+  const thead = container.querySelector('thead');
+  renderHeaders(model.headers, thead);
+  renderRows();
 }
 
-function renderHeaders(reviews) {
-  //grab headers from data
-  const thead = document.querySelector('thead');
-  const headers = Object.keys(reviews[0]).map(key => key.replace(/_/g, ' '));
-  createElement('th', '', headers, model.headers.label);
-  
+function renderHeaders(headers, thead) {
+  thead.innerHTML = '';
+  const tr = document.createElement('tr');
+  Object.values(headers).forEach(headerObj => {
+    const header = createElement('th', '', headerObj.label.replace(/_/g, ' '), headerObj.label);
+    tr.appendChild(header);
+  });
+  thead.appendChild(tr);
 }
 
 function renderRows(reviews) {
