@@ -15,7 +15,6 @@ postData().then((reviews) => {
     showData(reviews);
     console.log(model);
     renderData();
-    renderSearch();
     sortController(model);
   }
 ).catch((err) => {
@@ -79,15 +78,16 @@ function showData(reviews) {
 
 
 // View
-function renderSearch(){
-  const container = document.querySelector('.search');
-  renderInputs(model.headers, container)
-}
+// function renderSearch(){
+//   const container = document.querySelector('.search');
+//   renderInputs(model.headers, container)
+// }
 function renderData() {
   const container = document.querySelector('.wine-reviews');
   const thead = container.querySelector('thead');
   const tbody = container.querySelector('tbody');
   
+  renderInputs(model.headers, thead);
   renderHeaders(model.headers, thead);
   renderRows(model.reviews, tbody);
 }
@@ -111,11 +111,13 @@ function renderRows(reviews, tbody) {
     tbody.appendChild(tr);
   });
 }
-function renderInputs(headers, container){
+function renderInputs(headers, thead){
+  const tr = document.createElement('tr')
   Object.values(headers).forEach(headerObj => {
    const input = createInput('text', headerObj.label.replace(/_/g, ' '), headerObj.label);
-   container.appendChild(input);
+   tr.appendChild(input);
   });
+  thead.insertBefore(tr, thead.childNodes[0]);
   
 }
 
