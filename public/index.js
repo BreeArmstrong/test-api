@@ -15,6 +15,7 @@ postData().then((reviews) => {
     showData(reviews);
     console.log(model);
     renderData();
+    renderSearch();
     sortController(model);
   }
 ).catch((err) => {
@@ -35,7 +36,13 @@ function createElement(tag, innerHTML, className, prop) {
   element.setAttribute('data-prop', prop);
   element.innerHTML = innerHTML;
   return element;
-  
+}
+function createInput(type, label, className){
+  const input = document.createElement('input');
+  input.setAttribute('type', type);
+  input.setAttribute('label', label);
+  input.setAttribute('class', className);
+  return input;
 }
 function sortBy(newReviews, prop, asc) {
   //checks to see if they are ordered or not in asc
@@ -72,6 +79,10 @@ function showData(reviews) {
 
 
 // View
+function renderSearch(){
+  const container = document.querySelector('.search');
+  renderInputs(model.headers, container)
+}
 function renderData() {
   const container = document.querySelector('.wine-reviews');
   const thead = container.querySelector('thead');
@@ -99,6 +110,13 @@ function renderRows(reviews, tbody) {
     });
     tbody.appendChild(tr);
   });
+}
+function renderInputs(headers, container){
+  Object.values(headers).forEach(headerObj => {
+   const input = createInput('text', headerObj.label.replace(/_/g, ' '), headerObj.label);
+   container.appendChild(input);
+  });
+  
 }
 
 //Controller
