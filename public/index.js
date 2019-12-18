@@ -1,23 +1,27 @@
+//Model - skeleton
 const model = {
   headers: {},
   sortLabel: undefined  //price, reviewer, etc
   
 };
 
+//Fetch and Promise Handling
 async function postData() {
   const response = await fetch('/wine-reviews');
   // This data will show up in the resolve callback
   return await response.json();
 }
-
 postData().then((reviews) => {
     showData(reviews);
     console.log(model);
-    renderData()
+    renderData();
+    sortController(model);
   }
-).catch(() => {
+).catch((err) => {
+  console.log(err)
 });
 
+//Functions and Constants
 const getData = reviews => {
   const set = new Set();
   reviews.forEach(review => {
@@ -25,7 +29,35 @@ const getData = reviews => {
   });
   return [...set];
 };
+function createElement(tag, innerHTML, className, prop) {
+  const element = document.createElement(tag);
+  element.setAttribute('class', className);
+  element.setAttribute('data-prop', prop);
+  element.innerHTML = innerHTML;
+  return element;
+  
+}
+function sortBy(newReviews, prop, asc) {
+  //checks to see if they are ordered or not in asc
+  if(asc) {
+    newReviews.sort(ascCompareFn.bind(null, prop))
+  } else {
+    newReviews.sort(descCompareFn.bind(null, prop))
+  }
+}
+function ascCompareFn(prop, a, b) {
+  if (a[prop] > b[prop]) return 1;
+  else if (a[prop] < b[prop]) return -1;
+  else return 0;
+}
+function descCompareFn(prop, a, b) {
+  if (a[prop] > b[prop]) return -1;
+  else if (a[prop] < b[prop]) return 1;
+  else return 0;
+}
 
+
+//Model Update
 function showData(reviews) {
   const headers = getData(reviews);
   model.headers = headers.reduce((sortState, header) => {
@@ -39,6 +71,7 @@ function showData(reviews) {
 }
 
 
+// View
 function renderData() {
   const container = document.querySelector('.wine-reviews');
   const thead = container.querySelector('thead');
@@ -47,7 +80,6 @@ function renderData() {
   renderHeaders(model.headers, thead);
   renderRows(model.reviews, tbody);
 }
-
 function renderHeaders(headers, thead) {
   thead.innerHTML = '';
   const tr = document.createElement('tr');
@@ -57,7 +89,6 @@ function renderHeaders(headers, thead) {
   });
   thead.appendChild(tr);
 }
-
 function renderRows(reviews, tbody) {
   //clear out data:
   tbody.innerHTML = '';
@@ -70,11 +101,40 @@ function renderRows(reviews, tbody) {
   });
 }
 
-function createElement(tag, innerHTML, className, prop) {
-  const element = document.createElement(tag);
-  element.setAttribute('class', className);
-  element.setAttribute('data-prop', prop);
-  element.innerHTML = innerHTML;
-  return element;
-  
+//Controller
+
+function sortController() {
+  const thArr = Array.from(document.querySelectorAll('thead th'));
+  const clickHandler = (e) => {
+    const {prop} = e.target.dataset;
+    console.log(prop);
+    //Checks to see if the sortState prop is already there
+    model.headers[prop].sortState = !model.headers[prop].sortState;
+    //If not add it to the label
+    model.sortLabel = prop;
+    //Create a new array from the existing one to use in sort
+    const newReviews = [...model.reviews];
+    sortBy(newReviews, prop, model.headers[prop].sortState);
+    updateSortedHeadings();
+    renderRows(newReviews, document.querySelector('.wine-reviews tbody'));
+    console.log(model)
+  }
+  thArr.forEach((th, index) => {
+    const prop = th.dataset.prop;
+    th.addEventListener('click', clickHandler)
+  });
+}
+
+function updateSortedHeadings() {
+  const upArrow = '⭡';
+  const downArrow = '⭣';
+  document.querySelectorAll('.container thead th').forEach(th => {
+    const {prop} = th.dataset;
+    if (prop === model.sortLabel) {
+      const arrow = model.headers[prop].sortState ? upArrow : downArrow;
+      th.innerHTML = model.headers[prop].label + `${arrow}`
+    } else {
+      th.innerHTML = model.headers[prop].label;
+    }
+  });
 }
