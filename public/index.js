@@ -21,4 +21,5 @@ function renderRows(data) {
   //Grab info from rows
 }
 function createElement(tag, className, innerHTML) {
+const element = document.createElement(tag)
 }
