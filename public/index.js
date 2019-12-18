@@ -1,35 +1,24 @@
-let data = undefined;
 async function postData() {
-  const response =  await fetch('/wine-reviews');
-  data = await response.json();
-  const headers = data.map(Object.keys);
-  console.log((headers));
-  const rows = data.map(Object.values);
-  console.log(rows);
-  console.log(data);
+  const response = await fetch('/wine-reviews');
+  // This data will show up in the resolve callback
+  return await response.json();
 }
-
-postData().then(() => {renderData(data)}).catch(() => {});
-
-function renderData(data){
-  renderHeaders(data);
-  renderRows(data);
+postData().then((reviews) => {
+    renderData(reviews)
+  }
+).catch(() => {
+});
+function renderData(reviews) {
+  renderHeaders(reviews);
+  renderRows(reviews);
 }
-
-function renderHeaders(data) {
+function renderHeaders(reviews) {
   //grab headers from data
-  const headers = Array.forEach(Object.keys(data));
+  const headers = Object.keys(reviews[0]).map(key => key.replace(/_/g, ' '));
   console.log(`headers: ${headers}`)
 }
-
 function renderRows(data) {
   //Grab info from rows
 }
-
-
-
-//grab data
-//pass in to a function to get headers
-//pull out headers
-//another function for row elements
-//pull out row elements
+function createElement(tag, className, innerHTML) {
+}
