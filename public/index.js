@@ -1,3 +1,9 @@
+const model = {
+  headers: {},
+  sortLabel: undefined  //price, reviewer, etc
+  
+};
+
 async function postData() {
   const response = await fetch('/wine-reviews');
   // This data will show up in the resolve callback
@@ -5,36 +11,35 @@ async function postData() {
 }
 
 postData().then((reviews) => {
+    showData(reviews);
     renderData(reviews)
   }
 ).catch(() => {
 });
 
-const reviewsModel = {
-  props: {
-    headers: {
-      label: undefined,
-      sortState: undefined
-    },
-    reviews: undefined,
-    sortLabel: undefined  //price, reviewer, etc
-  }
+const getData = reviews => {
+  const set = new Set();
+  reviews.forEach(review => {
+    Object.keys(review).forEach(prop => set.add(prop));
+  });
+  return [...set];
 };
 
 function showData(reviews) {
-  const headers = renderHeaders(reviews);
-  reviewsModel.headers = headers.reduce((sortState, header) => {
+  const headers = getData(reviews);
+  model.headers = headers.reduce((sortState, header) => {
     sortState[header] = {
       sortState: undefined,
       label: header
     };
     return sortState;
   }, {});
-  reviewsModel.reviews = renderRows(reviews)
+  model.reviews = reviews;
 }
 
+
 function renderData(reviews) {
-  console.log(reviewsModel);
+  console.log(model);
   
   renderHeaders(reviews);
   renderRows(reviews);
@@ -44,7 +49,7 @@ function renderHeaders(reviews) {
   //grab headers from data
   const thead = document.querySelector('thead');
   const headers = Object.keys(reviews[0]).map(key => key.replace(/_/g, ' '));
-  createElement('th', '', headers, reviewsModel.headers.label);
+  createElement('th', '', headers, model.headers.label);
   
 }
 

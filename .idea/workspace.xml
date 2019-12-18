@@ -11,7 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="2964" />
+    <option name="totalTimeSeconds" value="3820" />
     <option name="idleThresholdMs" value="50000" />
     <option name="gitIntegration" value="true" />
     <option name="naggedAbout" value="1" />
@@ -64,7 +64,7 @@
       <workItem from="1576613693622" duration="1603000" />
       <workItem from="1576615317816" duration="19088000" />
       <workItem from="1576694654720" duration="672000" />
-      <workItem from="1576695363742" duration="6690000" />
+      <workItem from="1576695363742" duration="7992000" />
     </task>
     <servers />
   </component>
