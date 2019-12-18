@@ -42,27 +42,35 @@ function showData(reviews) {
 function renderData() {
   const container = document.querySelector('.wine-reviews');
   const thead = container.querySelector('thead');
+  const tbody = container.querySelector('tbody');
+  
   renderHeaders(model.headers, thead);
-  renderRows();
+  renderRows(model.reviews, tbody);
 }
 
 function renderHeaders(headers, thead) {
   thead.innerHTML = '';
   const tr = document.createElement('tr');
   Object.values(headers).forEach(headerObj => {
-    const header = createElement('th', '', headerObj.label.replace(/_/g, ' '), headerObj.label);
+    const header = createElement('th', headerObj.label.replace(/_/g, ' '), '', headerObj.label);
     tr.appendChild(header);
   });
   thead.appendChild(tr);
 }
 
-function renderRows(reviews) {
-  //Grab info from rows
-  const rowData = Object.values(reviews).map(value => value.replace(/_/g, ' '));
-  console.log(`Data: ${rowData}`)
+function renderRows(reviews, tbody) {
+  //clear out data:
+  tbody.innerHTML = '';
+  reviews.forEach(review => {
+    const tr = document.createElement('tr');
+    Object.values(review).forEach(value => {
+      tr.appendChild(createElement('td', value))
+    });
+    tbody.appendChild(tr);
+  });
 }
 
-function createElement(tag, className, innerHTML, prop) {
+function createElement(tag, innerHTML, className, prop) {
   const element = document.createElement(tag);
   element.setAttribute('class', className);
   element.setAttribute('data-prop', prop);
