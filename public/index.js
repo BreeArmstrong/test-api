@@ -11,9 +11,11 @@ async function postData() {
   // This data will show up in the resolve callback
   return await response.json();
 }
+
 postData().then((reviews) => {
     showData(reviews);
     console.log(model);
+    renderSearch();
     renderData();
     sortController(model);
   }
@@ -29,6 +31,7 @@ const getData = reviews => {
   });
   return [...set];
 };
+
 function createElement(tag, innerHTML, className, prop) {
   const element = document.createElement(tag);
   element.setAttribute('class', className);
@@ -36,26 +39,29 @@ function createElement(tag, innerHTML, className, prop) {
   element.innerHTML = innerHTML;
   return element;
 }
-function createInput(type, label, className){
-  const input = document.createElement('input');
-  input.setAttribute('type', type);
-  input.setAttribute('label', label);
-  input.setAttribute('class', className);
+
+function createInput(name, innerHTML) {
+  const input = document.createElement('textarea');
+  input.setAttribute('name', name);
+  input.setAttribute('innerHTML', innerHTML);
   return input;
 }
+
 function sortBy(newReviews, prop, asc) {
   //checks to see if they are ordered or not in asc
-  if(asc) {
+  if (asc) {
     newReviews.sort(ascCompareFn.bind(null, prop))
   } else {
     newReviews.sort(descCompareFn.bind(null, prop))
   }
 }
+
 function ascCompareFn(prop, a, b) {
   if (a[prop] > b[prop]) return 1;
   else if (a[prop] < b[prop]) return -1;
   else return 0;
 }
+
 function descCompareFn(prop, a, b) {
   if (a[prop] > b[prop]) return -1;
   else if (a[prop] < b[prop]) return 1;
@@ -78,19 +84,22 @@ function showData(reviews) {
 
 
 // View
-// function renderSearch(){
-//   const container = document.querySelector('.search');
-//   renderInputs(model.headers, container)
-// }
+function renderSearch() {
+  const container = document.querySelector('.wine-reviews');
+  const thead = container.querySelector('thead');
+  renderInputs(model.headers, thead);
+}
+
 function renderData() {
   const container = document.querySelector('.wine-reviews');
   const thead = container.querySelector('thead');
   const tbody = container.querySelector('tbody');
   
-  renderInputs(model.headers, thead);
+  
   renderHeaders(model.headers, thead);
   renderRows(model.reviews, tbody);
 }
+
 function renderHeaders(headers, thead) {
   thead.innerHTML = '';
   const tr = document.createElement('tr');
@@ -100,6 +109,7 @@ function renderHeaders(headers, thead) {
   });
   thead.appendChild(tr);
 }
+
 function renderRows(reviews, tbody) {
   //clear out data:
   tbody.innerHTML = '';
@@ -111,13 +121,15 @@ function renderRows(reviews, tbody) {
     tbody.appendChild(tr);
   });
 }
-function renderInputs(headers, thead){
-  const tr = document.createElement('tr')
+
+function renderInputs(headers) {
+  const tr = document.createElement('tr');
+  const th = document.createElement('th');
   Object.values(headers).forEach(headerObj => {
-   const input = createInput('text', headerObj.label.replace(/_/g, ' '), headerObj.label);
-   tr.appendChild(input);
+    const input = createInput(headerObj.label.replace(/_/g, ' '), headerObj.label.replace(/_/g, ' '));
+    th.appendChild(input)
   });
-  thead.insertBefore(tr, thead.childNodes[0]);
+  tr.appendChild(th);
   
 }
 
@@ -138,7 +150,7 @@ function sortController() {
     updateSortedHeadings();
     renderRows(newReviews, document.querySelector('.wine-reviews tbody'));
     console.log(model)
-  }
+  };
   thArr.forEach((th, index) => {
     const prop = th.dataset.prop;
     th.addEventListener('click', clickHandler)
