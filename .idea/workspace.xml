@@ -12,7 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="12985" />
+    <option name="totalTimeSeconds" value="19437" />
     <option name="idleThresholdMs" value="50000" />
     <option name="gitIntegration" value="true" />
     <option name="naggedAbout" value="1" />
@@ -65,7 +65,7 @@
       <workItem from="1576613693622" duration="1603000" />
       <workItem from="1576615317816" duration="19088000" />
       <workItem from="1576694654720" duration="672000" />
-      <workItem from="1576695363742" duration="21924000" />
+      <workItem from="1576695363742" duration="32414000" />
     </task>
     <servers />
   </component>
@@ -81,5 +81,9 @@
       <screen x="0" y="0" width="1620" height="1040" />
     </state>
     <state x="830" y="256" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1620.1040@0.0.1620.1040" timestamp="1576695309356" />
+    <state x="811" y="207" width="672" height="678" key="search.everywhere.popup" timestamp="1576740434434">
+      <screen x="0" y="0" width="1620" height="1040" />
+    </state>
+    <state x="811" y="207" width="672" height="678" key="search.everywhere.popup/0.0.1620.1040@0.0.1620.1040" timestamp="1576740434434" />
   </component>
 </project>
