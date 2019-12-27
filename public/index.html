@@ -1,27 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <style>
-    .wine-reviews {
-
-    }
-
-    table {
-      justify-content: center;
-    }
-
-    thead tr div {
-      flex-grow: 1;
-      display: flex;
-      justify-content: center;
-      width: 200%;
-      border-bottom: 1px solid black;
-    }
-
-    td {
-      border-bottom: 1px solid black;
-    }
-  </style>
   <meta charset="UTF-8">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -37,63 +16,6 @@
     <tbody>
     </tbody>
   </table>
-  <script>
-    class MyElement {
-      constructor(tag) {
-        this.elem = document.createElement(tag);
-      }
-
-      get dom() {
-        return this.elem;
-      }
-
-      attr(key, value) {
-        this.elem.setAttribute(key, value);
-        // You need the return this to chain methods ...
-        return this;
-      }
-
-      addClass(className) {
-        this.elem.classList.add(className);
-        return this;
-      }
-
-      text(innerHTML) {
-        this.elem.innerHTML = innerHTML;
-        return this;
-      }
-
-      append(parent) {
-        (parent instanceof MyElement ? parent.dom : parent).appendChild(this.elem);
-        return this;
-      }
-
-      appendChildren(input) {
-        const children = Array.isArray(input) ? input : [input];
-        children.forEach(child => this.elem.appendChild(
-          (child instanceof MyElement ? child.dom : child)
-        ));
-        return this;
-      }
-    }
-
-    function $(tag) {
-      return new MyElement(tag);
-    }
-
-    // Example
-    const thead = document.querySelector('thead');
-    console.log(thead);
-    const tr = $('tr').append(thead);
-    console.log(tr);
-    const th = $('th').append(tr);
-    console.log(th);
-    const input = $('input')
-      .attr('data-prop', 'price')
-      .attr('placeholder', 'some price')
-      .attr('type', 'text')
-      .append(th);
-  </script>
 </main>
 </body>
 </html>
