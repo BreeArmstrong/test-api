@@ -92,6 +92,7 @@ function renderHeaders(headers, thead) {
       .append(th);
     $('div')
       .addClass('sort-handler ')
+      .attr('data-prop', propName)
       .text(label)
       .append(th);
     $('input')
@@ -123,7 +124,7 @@ function renderRows(reviews, tbody) {
 //Controller
 
 function sortController() {
-  const thArr = Array.from(document.querySelectorAll('thead th'));
+
   const clickHandler = (e) => {
     const {prop} = e.target.dataset;
     console.log(prop);
@@ -138,10 +139,9 @@ function sortController() {
     renderRows(newReviews, document.querySelector('.wine-reviews tbody'));
     console.log(model)
   };
-  thArr.forEach((th, index) => {
-    const prop = th.dataset.prop;
-    th.addEventListener('click', clickHandler)
-  });
+  Array.from(document.querySelectorAll('.sort-handler'))
+    .forEach((div) => div.addEventListener('click', clickHandler)
+  );
 }
 
 function updateSortedHeadings() {
