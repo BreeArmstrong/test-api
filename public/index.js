@@ -2,7 +2,7 @@
 const model = {
   headers: {},
   sortLabel: undefined  //price, reviewer, etc
-  
+
 };
 
 //Fetch and Promise Handling
@@ -11,15 +11,6 @@ async function postData() {
   // This data will show up in the resolve callback
   return await response.json();
 }
-postData().then((reviews) => {
-    showData(reviews);
-    console.log(model);
-    renderData();
-    sortController(model);
-  }
-).catch((err) => {
-  console.log(err)
-});
 
 //Functions and Constants
 const getData = reviews => {
@@ -87,25 +78,31 @@ function renderData() {
   const thead = container.querySelector('thead');
   const tbody = container.querySelector('tbody');
   // const input = renderInputs();
-  
+
   // renderInputs(model.headers, thead);
   renderHeaders(model.headers, thead);
   renderRows(model.reviews, tbody);
 }
 function renderHeaders(headers, thead) {
   thead.innerHTML = '';
-  const tr = document.createElement('tr');
-  const div = document.createElement('div');
-  Object.values(headers).forEach(headerObj => {
-    const header = createElement('th', headerObj.label.replace(/_/g, ' '), '', headerObj.label);
-    div.appendChild(header);
+  const tr = $('tr').append(thead);
+  Object.entries(headers).forEach(([propName, {label}]) => {
+    const th = $('th').append(tr);
+    const divForInput = $('div')
+      .append(th);
+    $('div')
+      .addClass('sort-handler ')
+      .text(label)
+      .append(th);
+    $('input')
+      .attr('type', 'text')
+      .attr('placeholder', propName)
+      .append(divForInput);
   });
-    Object.values(model.headers).forEach(headerObj => {
-      const input = createInput('text', headerObj.label.replace(/_/g, ' '));
-      div.appendChild(input);
-    });
-    tr.appendChild(div);
-  thead.appendChild(tr);
+  // input element in a div
+  // property name in a div
+  // create a td and attach it
+  // attach the td to tr
 }
 function renderRows(reviews, tbody) {
   //clear out data:
@@ -160,3 +157,20 @@ function updateSortedHeadings() {
     }
   });
 }
+
+// Fire off the init function
+(function init() {
+  document.addEventListener('readystatechange', () => {
+    if (document.readyState === 'interactive') {
+      postData().then((reviews) => {
+          showData(reviews);
+          console.log(model);
+          renderData();
+          sortController(model);
+        }
+      ).catch((err) => {
+        console.log(err)
+      });
+    }
+  });
+})();
