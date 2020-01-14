@@ -4,12 +4,12 @@ const uuid = require('uuid');
 
 
 const wineReviews = require("../db/wine-reviews").map(r => ({
-...r,
-id: uuid.v4()
-});
+  ...r,
+  id: uuid.v4()
+}));
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   res.json(wineReviews)
 });
 

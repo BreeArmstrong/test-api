@@ -8,7 +8,7 @@ const uuid = require('uuid');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const wineReviewsRouter = require('./routes/wine-reviews');
+const wineReviewsRouter = require('./routes/reviews');
 const app = express();
 
 // view engine setup
