@@ -1,3 +1,5 @@
+import uuid from '/app'
+
 //Model - skeleton
 const model = {
   headers: {},
@@ -89,7 +91,7 @@ function renderData() {
   const thead = container.querySelector('thead');
   const tbody = container.querySelector('tbody');
   renderHeaders(model.headers, thead);
-  renderRows(model.reviews, tbody);
+  renderRows(model.reviews, tbody, uuid);
 }
 
 function renderHeaders(headers, thead) {
@@ -107,7 +109,7 @@ function renderHeaders(headers, thead) {
 
 }
 
-function renderRows(reviews, tbody) {
+function renderRows(reviews, tbody, uuid) {
   //clear out data:
   tbody.innerHTML = '';
   reviews.forEach(review => {
