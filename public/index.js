@@ -13,6 +13,8 @@ async function postData() {
   // This data will show up in the resolve callback
   return await response.json();
 }
+<<<<<<< HEAD
+=======
 
 postData().then((reviews) => {
     showData(reviews);
@@ -23,6 +25,7 @@ postData().then((reviews) => {
 ).catch((err) => {
   console.log(err)
 });
+>>>>>>> 7036abf08aaa8a7d51c044125674d82195cb8444
 
 //Functions and Constants
 const getData = reviews => {
@@ -90,11 +93,38 @@ function renderData() {
   const container = document.querySelector('.wine-reviews');
   const thead = container.querySelector('thead');
   const tbody = container.querySelector('tbody');
+<<<<<<< HEAD
+  // const input = renderInputs();
+
+  // renderInputs(model.headers, thead);
+=======
+>>>>>>> 7036abf08aaa8a7d51c044125674d82195cb8444
   renderHeaders(model.headers, thead);
   renderRows(model.reviews, tbody, uuid);
 }
 
 function renderHeaders(headers, thead) {
+<<<<<<< HEAD
+  thead.innerHTML = '';
+  const tr = $('tr').append(thead);
+  Object.entries(headers).forEach(([propName, {label}]) => {
+    const th = $('th').append(tr);
+    const divForInput = $('div')
+      .append(th);
+    $('div')
+      .addClass('sort-handler ')
+      .text(label)
+      .append(th);
+    $('input')
+      .attr('type', 'text')
+      .attr('placeholder', propName)
+      .append(divForInput);
+  });
+  // input element in a div
+  // property name in a div
+  // create a td and attach it
+  // attach the td to tr
+=======
   console.log(thead);
   const tr = $('tr').append(thead);
   console.log(tr);
@@ -107,6 +137,7 @@ function renderHeaders(headers, thead) {
     .append(th);
   console.log(input);
 
+>>>>>>> 7036abf08aaa8a7d51c044125674d82195cb8444
 }
 
 function renderRows(reviews, tbody, uuid) {
@@ -158,3 +189,20 @@ function updateSortedHeadings() {
     }
   });
 }
+
+// Fire off the init function
+(function init() {
+  document.addEventListener('readystatechange', () => {
+    if (document.readyState === 'interactive') {
+      postData().then((reviews) => {
+          showData(reviews);
+          console.log(model);
+          renderData();
+          sortController(model);
+        }
+      ).catch((err) => {
+        console.log(err)
+      });
+    }
+  });
+})();
