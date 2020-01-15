@@ -1,3 +1,5 @@
+import uuid from '/app'
+
 //Model - skeleton
 const model = {
   headers: {},
@@ -11,6 +13,19 @@ async function postData() {
   // This data will show up in the resolve callback
   return await response.json();
 }
+<<<<<<< HEAD
+=======
+
+postData().then((reviews) => {
+    showData(reviews);
+    console.log(model);
+    renderData();
+    sortController(model);
+  }
+).catch((err) => {
+  console.log(err)
+});
+>>>>>>> 7036abf08aaa8a7d51c044125674d82195cb8444
 
 //Functions and Constants
 const getData = reviews => {
@@ -20,6 +35,7 @@ const getData = reviews => {
   });
   return [...set];
 };
+
 function createElement(tag, innerHTML, className, prop) {
   const element = document.createElement(tag);
   element.setAttribute('class', className);
@@ -27,25 +43,29 @@ function createElement(tag, innerHTML, className, prop) {
   element.innerHTML = innerHTML;
   return element;
 }
-function createInput(type, prop){
+
+function createInput(type, prop) {
   const input = document.createElement('input');
   input.setAttribute('type', type);
   input.setAttribute('data-prop', prop);
   return input;
 }
+
 function sortBy(newReviews, prop, asc) {
   //checks to see if they are ordered or not in asc
-  if(asc) {
+  if (asc) {
     newReviews.sort(ascCompareFn.bind(null, prop))
   } else {
     newReviews.sort(descCompareFn.bind(null, prop))
   }
 }
+
 function ascCompareFn(prop, a, b) {
   if (a[prop] > b[prop]) return 1;
   else if (a[prop] < b[prop]) return -1;
   else return 0;
 }
+
 function descCompareFn(prop, a, b) {
   if (a[prop] > b[prop]) return -1;
   else if (a[prop] < b[prop]) return 1;
@@ -68,22 +88,23 @@ function showData(reviews) {
 
 
 // View
-// function renderSearch(){
-//   const container = document.querySelector('.wine-reviews');
-//   const thead = container.querySelector('thead');
-//
-// }
+
 function renderData() {
   const container = document.querySelector('.wine-reviews');
   const thead = container.querySelector('thead');
   const tbody = container.querySelector('tbody');
+<<<<<<< HEAD
   // const input = renderInputs();
 
   // renderInputs(model.headers, thead);
+=======
+>>>>>>> 7036abf08aaa8a7d51c044125674d82195cb8444
   renderHeaders(model.headers, thead);
-  renderRows(model.reviews, tbody);
+  renderRows(model.reviews, tbody, uuid);
 }
+
 function renderHeaders(headers, thead) {
+<<<<<<< HEAD
   thead.innerHTML = '';
   const tr = $('tr').append(thead);
   Object.entries(headers).forEach(([propName, {label}]) => {
@@ -103,8 +124,23 @@ function renderHeaders(headers, thead) {
   // property name in a div
   // create a td and attach it
   // attach the td to tr
+=======
+  console.log(thead);
+  const tr = $('tr').append(thead);
+  console.log(tr);
+  const th = $('th').append(tr);
+  console.log(th);
+  const input = $('input')
+    .attr('data-prop', 'price')
+    .attr('placeholder', 'some price')
+    .attr('type', 'text')
+    .append(th);
+  console.log(input);
+
+>>>>>>> 7036abf08aaa8a7d51c044125674d82195cb8444
 }
-function renderRows(reviews, tbody) {
+
+function renderRows(reviews, tbody, uuid) {
   //clear out data:
   tbody.innerHTML = '';
   reviews.forEach(review => {
@@ -115,10 +151,6 @@ function renderRows(reviews, tbody) {
     tbody.appendChild(tr);
   });
 }
-// function renderInputs(headers){
-   // return input;
-  // });
-// }
 
 //Controller
 
